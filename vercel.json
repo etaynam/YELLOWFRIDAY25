@@ -1,0 +1,14 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/auto-post-question",
+      "schedule": "*/3 * * * *"
+    }
+  ],
+  "functions": {
+    "api/cron/auto-post-question.js": {
+      "maxDuration": 60
+    }
+  }
+}
+
