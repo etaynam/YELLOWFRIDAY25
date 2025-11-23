@@ -25,7 +25,7 @@ function RouterApp() {
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/chat" element={<AIChat />} />
-        <Route path="/chat/preview" element={<AIChat isPreview={true} />} />
+        <Route path="/preview" element={<AIChat isPreview={true} />} />
         <Route path="/admin" element={<AdminPanel />} />
       </Routes>
     </BrowserRouter>
