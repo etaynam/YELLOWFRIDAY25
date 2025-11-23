@@ -265,6 +265,23 @@
   color: #FFD700;
 }
 
+.welcome-form-link-button {
+  background: none;
+  border: none;
+  color: #52ff87;
+  text-decoration: underline;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.welcome-form-link-button:hover {
+  color: #FFD700;
+}
+
 .welcome-form-button {
   padding: 15px 30px;
   background: linear-gradient(135deg, #FFD700 0%, #FFE44D 100%);

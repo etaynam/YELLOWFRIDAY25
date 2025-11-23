@@ -3,8 +3,8 @@ import { FiSend, FiMessageCircle, FiUser, FiBell, FiCheck } from 'react-icons/fi
 import { supabase } from '../lib/supabase'
 import './AIChat.css'
 
-function AIChat() {
-  console.log('✅ AIChat component loaded!')
+function AIChat({ isPreview = false }) {
+  console.log('✅ AIChat component loaded!', { isPreview })
   const messagesEndRef = useRef(null)
   const messagesContainerRef = useRef(null)
   const [announcements, setAnnouncements] = useState([])
@@ -28,6 +28,7 @@ function AIChat() {
   const [nameError, setNameError] = useState('')
   const [forbiddenWords, setForbiddenWords] = useState([])
   const [connectedUsersCount, setConnectedUsersCount] = useState(55)
+  const [showTermsModal, setShowTermsModal] = useState(false)
 
   const scrollToBottom = (instant = false) => {
     if (instant) {
@@ -107,8 +108,13 @@ function AIChat() {
     return () => clearInterval(interval)
   }, [])
 
-  // בדיקת cookies בטעינה ראשונית
+  // בדיקת cookies בטעינה ראשונית (רק אם לא preview)
   useEffect(() => {
+    if (isPreview) {
+      setShowWelcomeForm(false)
+      return
+    }
+    
     const checkUserCookie = () => {
       try {
         const cookies = document.cookie.split(';')
@@ -131,7 +137,7 @@ function AIChat() {
     }
     
     checkUserCookie()
-  }, [])
+  }, [isPreview])
 
   // בדיקת שם נגד מילים אסורות
   const validateName = (name) => {
@@ -1186,7 +1192,7 @@ function AIChat() {
                     className="welcome-form-checkbox"
                   />
                   <span className="welcome-form-checkbox-text">
-                    אני מאשר/ת את <a href="#" target="_blank" className="welcome-form-link">תקנון השימוש</a> ומסכים/ה לתנאיו
+                    אני מאשר/ת את <button type="button" onClick={(e) => { e.preventDefault(); setShowTermsModal(true); }} className="welcome-form-link-button">תקנון השימוש</button> ומסכים/ה לתנאיו
                   </span>
                 </label>
               </div>
@@ -1195,6 +1201,111 @@ function AIChat() {
                 <FiCheck /> התחל לצ'אט
               </button>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Modal לתקנון המלא */}
+      {showTermsModal && (
+        <div className="terms-modal-overlay" onClick={() => setShowTermsModal(false)}>
+          <div className="terms-modal-container" onClick={(e) => e.stopPropagation()}>
+            <button className="terms-modal-close" onClick={() => setShowTermsModal(false)}>×</button>
+            <div className="terms-modal-content">
+              <h2 className="terms-modal-title">תקנון השימוש בצ'אט</h2>
+              <div className="terms-modal-text">
+                <p><strong>ברוך הבא למערכת הצ'אט של רשת מחסני השוק.</strong> השימוש במערכת כפוף ומותנה בקריאת התקנון ובהסכמה מלאה לכל סעיפיו.</p>
+                
+                <p>בשימוש בצ'אט הלקוח מאשר כי קרא, הבין והסכים לכל התנאים שלהלן:</p>
+                
+                <h3>1. כללי</h3>
+                <p>מערכת הצ'אט מופעלת בשילוב טכנולוגיית בינה מלאכותית.</p>
+                <p>הצ'אט נועד להענקת מידע כללי בלבד, ואינו מהווה תחליף למידע רשמי המופיע בסניפים, באתר הרשת או בתקנונים רשמיים אחרים של מחסני השוק.</p>
+                <p>רשת מחסני השוק שומרת לעצמה את הזכות לעדכן, לשנות או להפסיק את פעילות הצ'אט בכל עת וללא הודעה מוקדמת.</p>
+                
+                <h3>2. מהות השירות</h3>
+                <p>המערכת מספקת מענה אוטומטי אשר עשוי לכלול טעויות, השמטות, אי־דיוקים, ניסוחים שגויים או מידע ישן.</p>
+                <p>הלקוח מאשר כי הוא מודע לכך שהתוכן בצ'אט אינו מחייב את הרשת בשום צורה.</p>
+                <p>בכל סתירה בין המידע בצ'אט לבין המידע בסניף, באתר הרשמי או בתקנוני הרשת — אך ורק המידע הרשמי הוא הקובע.</p>
+                
+                <h3>3. אחריות הלקוח</h3>
+                <p>כל שימוש במידע המתקבל בצ'אט נעשה על אחריותו הבלעדית של הלקוח.</p>
+                <p>הלקוח מצהיר כי לא תהיה לו כל טענה, דרישה או תביעה נגד רשת מחסני השוק, עובדיה, מנהליה או מי מטעמה בגין:</p>
+                <ul>
+                  <li>מידע שגוי</li>
+                  <li>אי־דיוקים</li>
+                  <li>טעויות ניסוח</li>
+                  <li>מידע חלקי</li>
+                  <li>הבנה מוטעית</li>
+                  <li>או כל נזק ישיר/עקיף הנובע משימוש בצ'אט</li>
+                </ul>
+                <p>הלקוח מתחייב לבדוק את המידע הרשמי לפני ביצוע רכישה או החלטה אחרת המבוססת על המידע בצ'אט.</p>
+                
+                <h3>4. מידע קובע</h3>
+                <p>המידע המחייב היחיד הוא זה המפורסם:</p>
+                <ul>
+                  <li>בסניפי הרשת</li>
+                  <li>באתר הרשמי</li>
+                  <li>בתקנוני הרשת</li>
+                  <li>אצל נציגי שירות מוסמכים</li>
+                </ul>
+                <p>מחירים, מבצעים, שעות פעילות, זמינות מוצרים, מלאי, הנחות או הטבות — יחשבו מחייבים רק כפי שמופיעים רשמית בסניף.</p>
+                
+                <h3>5. התנהלות משתמש במערכת</h3>
+                <p>המשתמש מתחייב לא לפרסם, לשלוח או להזין בצ'אט כל תוכן המהווה:</p>
+                <ul>
+                  <li>לשון הרע</li>
+                  <li>הטרדה</li>
+                  <li>פגיעה בפרטיות</li>
+                  <li>קללות, שפה פוגענית או גזענות</li>
+                  <li>מידע שקרי, מטעה או בלתי חוקי</li>
+                  <li>פרסום מסחרי אסור</li>
+                  <li>סקריפטים, קודים או נסיונות פגיעה במערכת</li>
+                </ul>
+                <p>לא להתחזה לאחר.</p>
+                <p>לא לנסות לעקוף הגנות או חסימות.</p>
+                
+                <h3>6. חסימות והגבלות</h3>
+                <p>מחסני השוק רשאית לחסום משתמש בכל עת ללא צורך בנימוק או הודעה מוקדמת, לרבות במקרים של:</p>
+                <ul>
+                  <li>שימוש לא ראוי</li>
+                  <li>העלאת תוכן אסור</li>
+                  <li>ניסיון פגיעה במערכת</li>
+                  <li>התנהגות מאיימת או פוגענית</li>
+                </ul>
+                <p>חסימת משתמש לא תחשיב כהפרה מצד הרשת, ולא יעמדו למשתמש טענות או דרישות כלפיה.</p>
+                
+                <h3>7. הגבלת אחריות</h3>
+                <p>מחסני השוק אינה אחראית לכל נזק שייגרם עקב שימוש בצ'אט, לרבות נזק עקיף, תוצאתי, כספי, תפעולי או רגשי.</p>
+                <p>המערכת ניתנת "כפי שהיא" (As-Is) ללא אחריות לביצועיה, זמינותה או דיוק מידע.</p>
+                <p>אין כל התחייבות שהמידע בצ'אט יהיה מעודכן בזמן אמת.</p>
+                
+                <h3>8. פרטיות ואבטחת מידע</h3>
+                <p>כל שיחה בצ'אט עשויה להישמר לצרכי תפעול, שיפור המערכת ושמירה על בטחון המשתמשים.</p>
+                <p>מחסני השוק רשאית לשמור נתונים לצורך הגנה מפני שימוש לרעה או לצורך תפעולי.</p>
+                <p>שימוש בצ'אט מהווה הסכמה למדיניות הפרטיות של הרשת.</p>
+                
+                <h3>9. קניין רוחני</h3>
+                <p>כל הזכויות במערכת, בעיצוב, בתכנים ובטכנולוגיה — שמורות למחסני השוק בלבד.</p>
+                
+                <h3>10. תנאים כלליים</h3>
+                <p>התקנון מנוסח בלשון זכר אך מתייחס לכל המגדרים.</p>
+                <p>מחסני השוק רשאית לעדכן את התקנון מעת לעת.</p>
+                <p>המשך שימוש בצ'אט מהווה הסכמה לתקנון המעודכן.</p>
+                
+                <h3>11. הצהרת המשתמש</h3>
+                <p>באישור הצ'קבוקס המשתמש מצהיר כי:</p>
+                <ul>
+                  <li>קרא והבין את כל התנאים</li>
+                  <li>מסכים לכל הסעיפים</li>
+                  <li>יודע שהמידע בצ'אט אינו מחייב</li>
+                  <li>האחריות עליו בלבד</li>
+                  <li>המידע הרשמי בסניפים/אתר הוא הקובע</li>
+                  <li>הוא עלול להיחסם בכל עת עקב שימוש לא ראוי</li>
+                  <li>לא תהיה לו כל טענה או תביעה כלפי מחסני השוק</li>
+                </ul>
+              </div>
+              <button className="terms-modal-close-button" onClick={() => setShowTermsModal(false)}>סגור</button>
+            </div>
           </div>
         </div>
       )}
@@ -1290,46 +1401,48 @@ function AIChat() {
           <div ref={messagesEndRef} />
         </div>
 
-        <form className="chat-input-form" onSubmit={handleSend}>
-          {inputError && (
-            <div className="chat-input-error">
-              {inputError}
+        {!isPreview && (
+          <form className="chat-input-form" onSubmit={handleSend}>
+            {inputError && (
+              <div className="chat-input-error">
+                {inputError}
+              </div>
+            )}
+            <div className="input-container">
+              <textarea
+                className={`chat-input ${inputError ? 'error' : ''}`}
+                placeholder="שאל שאלה על Yellow Friday..."
+                value={inputValue}
+                onChange={(e) => {
+                  setInputValue(e.target.value)
+                  setInputError('') // ניקוי שגיאה בזמן הקלדה
+                }}
+                dir="rtl"
+                rows={1}
+                onInput={(e) => {
+                  e.target.style.height = 'auto'
+                  e.target.style.height = e.target.scrollHeight + 'px'
+                }}
+              />
+              <div className="input-actions">
+                <button 
+                  type="submit" 
+                  className="chat-send-button" 
+                  disabled={!inputValue.trim() || isLoading || cooldownTimer > 0}
+                  title={cooldownTimer > 0 ? `נא להמתין ${cooldownTimer} שניות לפני שליחת הודעה נוספת` : ''}
+                >
+                  {isLoading ? (
+                    <div className="loading-spinner-small"></div>
+                  ) : cooldownTimer > 0 ? (
+                    <span className="cooldown-timer">{cooldownTimer}</span>
+                  ) : (
+                    <FiSend className="send-icon" />
+                  )}
+                </button>
+              </div>
             </div>
-          )}
-          <div className="input-container">
-            <textarea
-              className={`chat-input ${inputError ? 'error' : ''}`}
-              placeholder="שאל שאלה על Yellow Friday..."
-              value={inputValue}
-              onChange={(e) => {
-                setInputValue(e.target.value)
-                setInputError('') // ניקוי שגיאה בזמן הקלדה
-              }}
-              dir="rtl"
-              rows={1}
-              onInput={(e) => {
-                e.target.style.height = 'auto'
-                e.target.style.height = e.target.scrollHeight + 'px'
-              }}
-            />
-            <div className="input-actions">
-              <button 
-                type="submit" 
-                className="chat-send-button" 
-                disabled={!inputValue.trim() || isLoading || cooldownTimer > 0}
-                title={cooldownTimer > 0 ? `נא להמתין ${cooldownTimer} שניות לפני שליחת הודעה נוספת` : ''}
-              >
-                {isLoading ? (
-                  <div className="loading-spinner-small"></div>
-                ) : cooldownTimer > 0 ? (
-                  <span className="cooldown-timer">{cooldownTimer}</span>
-                ) : (
-                  <FiSend className="send-icon" />
-                )}
-              </button>
-            </div>
-          </div>
-        </form>
+          </form>
+        )}
       </div>
     </div>
   )
