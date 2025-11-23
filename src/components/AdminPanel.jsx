@@ -15,6 +15,12 @@ function AdminPanel() {
   const [blockedIPs, setBlockedIPs] = useState([])
   const [forbiddenWords, setForbiddenWords] = useState([])
   const [announcements, setAnnouncements] = useState([])
+  const [analytics, setAnalytics] = useState({
+    submissions: 0,
+    whatsappClicks: 0,
+    dailySubmissions: {},
+    dailyClicks: {}
+  })
   
   const [newBlockedIP, setNewBlockedIP] = useState('')
   const [newForbiddenWord, setNewForbiddenWord] = useState('')
@@ -140,12 +146,36 @@ function AdminPanel() {
     return () => clearInterval(interval)
   }, [isAuthenticated, activeTab])
 
+  const loadAnalytics = async () => {
+    try {
+      const token = await getAuthToken()
+      if (!token) return
+
+      const response = await fetch(`${supabaseUrl}/functions/v1/admin-api/analytics`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ action: 'stats' })
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        if (data) setAnalytics(data)
+      }
+    } catch (error) {
+      // Error loading analytics
+    }
+  }
+
   const loadData = async () => {
     await Promise.all([
       loadMessages(),
       loadBlockedIPs(),
       loadForbiddenWords(),
-      loadAnnouncements()
+      loadAnnouncements(),
+      loadAnalytics()
     ])
   }
 
@@ -562,6 +592,15 @@ function AdminPanel() {
         >
           הודעות מודגשות ({announcements.length})
         </button>
+        <button 
+          className={activeTab === 'analytics' ? 'active' : ''} 
+          onClick={() => {
+            setActiveTab('analytics')
+            loadAnalytics()
+          }}
+        >
+          דוח רישומים
+        </button>
       </div>
 
       <div className="admin-content">
@@ -784,6 +823,64 @@ function AdminPanel() {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'analytics' && (
+          <div className="admin-section">
+            <h2>דוח רישומים וקליקים</h2>
+            <div className="analytics-dashboard">
+              <div className="analytics-stats">
+                <div className="stat-card">
+                  <h3>סה"כ רישומים</h3>
+                  <div className="stat-number">{analytics.submissions}</div>
+                </div>
+                <div className="stat-card">
+                  <h3>סה"כ קליקים על ווטסאפ</h3>
+                  <div className="stat-number">{analytics.whatsappClicks}</div>
+                </div>
+                <div className="stat-card">
+                  <h3>אחוז המרה</h3>
+                  <div className="stat-number">
+                    {analytics.submissions > 0 
+                      ? ((analytics.whatsappClicks / analytics.submissions) * 100).toFixed(1) 
+                      : 0}%
+                  </div>
+                </div>
+              </div>
+              
+              <div className="daily-stats">
+                <h3>רישומים לפי יום (שבוע אחרון)</h3>
+                <div className="daily-chart">
+                  {Object.entries(analytics.dailySubmissions || {}).map(([date, count]) => (
+                    <div key={date} className="daily-bar">
+                      <div className="bar-label">{new Date(date).toLocaleDateString('he-IL', { day: '2-digit', month: '2-digit' })}</div>
+                      <div className="bar-container">
+                        <div className="bar" style={{ height: `${(count / Math.max(...Object.values(analytics.dailySubmissions || {1: 1}))) * 100}%` }}>
+                          {count}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="daily-stats">
+                <h3>קליקים על ווטסאפ לפי יום (שבוע אחרון)</h3>
+                <div className="daily-chart">
+                  {Object.entries(analytics.dailyClicks || {}).map(([date, count]) => (
+                    <div key={date} className="daily-bar">
+                      <div className="bar-label">{new Date(date).toLocaleDateString('he-IL', { day: '2-digit', month: '2-digit' })}</div>
+                      <div className="bar-container">
+                        <div className="bar clicks-bar" style={{ height: `${(count / Math.max(...Object.values(analytics.dailyClicks || {1: 1}), 1)) * 100}%` }}>
+                          {count}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         )}

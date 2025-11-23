@@ -12,13 +12,16 @@ function App() {
   const [showSuccess, setShowSuccess] = useState(false)
   const [revealedImage, setRevealedImage] = useState(null)
 
-  const handleFormSuccess = (imagePath) => {
+  const [formSubmissionId, setFormSubmissionId] = useState(null)
+
+  const handleFormSuccess = (imagePath, submissionId) => {
     setRevealedImage(imagePath)
+    setFormSubmissionId(submissionId)
     setShowSuccess(true)
   }
 
   if (showSuccess) {
-    return <SuccessScreen revealedImage={revealedImage} onClose={() => setShowSuccess(false)} />
+    return <SuccessScreen revealedImage={revealedImage} formSubmissionId={formSubmissionId} onClose={() => setShowSuccess(false)} />
   }
 
   return (

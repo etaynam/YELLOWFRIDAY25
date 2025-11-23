@@ -311,12 +311,15 @@ const SecretDealsStrip = forwardRef((props, ref) => {
         throw new Error(`שגיאה בשליחת הטופס (${response.status}): ${errorText}`)
       }
       
+      const responseData = await response.json()
+      const submissionId = responseData.submissionId || null
+      
       // הצלחה - סגור את הטופס והצג מסך הצלחה
       togglePopup()
-      // קרא ל-onSuccess עם נתיב התמונה
+      // קרא ל-onSuccess עם נתיב התמונה ו-ID הרישום
       if (onSuccess) {
         const imagePath = '/ex2.png'
-        onSuccess(imagePath)
+        onSuccess(imagePath, submissionId)
       }
       
     } catch (error) {

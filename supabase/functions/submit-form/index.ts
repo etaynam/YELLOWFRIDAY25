@@ -1,7 +1,10 @@
 // Supabase Edge Function - שליחת טופס ל-webhook
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 const WEBHOOK_URL = Deno.env.get('MAKE_WEBHOOK_URL') || 'https://hook.eu2.make.com/0b02h3nkhi77eoxmx52eehfxi7i1keiw'
+const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!
+const SUPABASE_SERVICE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
 
 serve(async (req) => {
   const timestamp = new Date().toISOString()
@@ -41,8 +44,38 @@ serve(async (req) => {
     }
 
     // בדיקת rate limiting בסיסית - בדוק IP
-    const clientIP = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown'
+    const clientIP = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || req.headers.get('x-real-ip') || 'unknown'
+    const userAgent = req.headers.get('user-agent') || 'unknown'
     console.log(`[${timestamp}] Client IP: ${clientIP}`)
+    
+    // שמירת נתונים ב-database (בלי לפגוע בתהליך הקיים)
+    let submissionId = null
+    try {
+      const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY)
+      const { data: submission, error: dbError } = await supabase
+        .from('form_submissions')
+        .insert({
+          first_name: payload.firstName || null,
+          last_name: payload.lastName || null,
+          phone: payload.phone || null,
+          email: payload.email || null,
+          city: payload.city || null,
+          ip_address: clientIP,
+          user_agent: userAgent
+        })
+        .select('id')
+        .single()
+      
+      if (!dbError && submission) {
+        submissionId = submission.id
+        console.log(`[${timestamp}] ✅ Form submission saved to database: ${submissionId}`)
+      } else {
+        console.log(`[${timestamp}] ⚠️ Could not save to database (non-critical):`, dbError?.message)
+      }
+    } catch (dbError) {
+      // לא נכשל את הבקשה בגלל שגיאת database - זה רק לניתוח
+      console.log(`[${timestamp}] ⚠️ Database error (non-critical):`, dbError)
+    }
     
     // שליחה ל-webhook
     console.log(`[${timestamp}] 📤 Sending to webhook: ${WEBHOOK_URL}`)
@@ -78,7 +111,8 @@ serve(async (req) => {
       JSON.stringify({ 
         success: true, 
         message: 'Form submitted successfully',
-        webhookResponse: webhookData 
+        webhookResponse: webhookData,
+        submissionId: submissionId // החזרת ID הרישום (אם נשמר)
       }),
       { 
         status: 200, 

@@ -225,6 +225,64 @@ serve(async (req) => {
       }
     }
 
+    // Analytics - דוח רישומים וקליקים
+    if (resource === 'analytics') {
+      if (action === 'stats') {
+        // ספירת רישומים
+        const { count: submissionsCount, error: submissionsError } = await supabase
+          .from('form_submissions')
+          .select('id', { count: 'exact', head: true })
+        
+        // ספירת קליקים על ווטסאפ
+        const { count: clicksCount, error: clicksError } = await supabase
+          .from('whatsapp_clicks')
+          .select('id', { count: 'exact', head: true })
+        
+        // ספירת רישומים לפי יום (לשבוע האחרון)
+        const weekAgo = new Date()
+        weekAgo.setDate(weekAgo.getDate() - 7)
+        
+        const { data: dailySubmissions, error: dailyError } = await supabase
+          .from('form_submissions')
+          .select('submitted_at')
+          .gte('submitted_at', weekAgo.toISOString())
+          .order('submitted_at', { ascending: true })
+        
+        // ספירת קליקים לפי יום
+        const { data: dailyClicks, error: dailyClicksError } = await supabase
+          .from('whatsapp_clicks')
+          .select('clicked_at')
+          .gte('clicked_at', weekAgo.toISOString())
+          .order('clicked_at', { ascending: true })
+        
+        // עיבוד נתונים יומיים
+        const submissionsByDay: Record<string, number> = {}
+        if (dailySubmissions) {
+          dailySubmissions.forEach((sub: any) => {
+            const day = new Date(sub.submitted_at).toISOString().split('T')[0]
+            submissionsByDay[day] = (submissionsByDay[day] || 0) + 1
+          })
+        }
+        
+        const clicksByDay: Record<string, number> = {}
+        if (dailyClicks) {
+          dailyClicks.forEach((click: any) => {
+            const day = new Date(click.clicked_at).toISOString().split('T')[0]
+            clicksByDay[day] = (clicksByDay[day] || 0) + 1
+          })
+        }
+        
+        return new Response(JSON.stringify({
+          submissions: submissionsCount || 0,
+          whatsappClicks: clicksCount || 0,
+          dailySubmissions: submissionsByDay,
+          dailyClicks: clicksByDay
+        }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        })
+      }
+    }
+
     return new Response(JSON.stringify({ error: 'Action not found' }), {
       status: 404,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }
