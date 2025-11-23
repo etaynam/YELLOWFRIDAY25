@@ -133,18 +133,18 @@
 }
 
 .ai-chat-page.preview-mode .message-user {
-  font-size: 1.8rem;
+  font-size: 2.2rem;
   font-weight: bold;
 }
 
 .ai-chat-page.preview-mode .message-time {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
 }
 
 .ai-chat-page.preview-mode .message-content {
-  font-size: 1.8rem;
-  line-height: 1.9;
-  padding: 25px 30px;
+  font-size: 2.2rem;
+  line-height: 2;
+  padding: 30px 35px;
   border-radius: 20px;
 }
 
@@ -178,12 +178,12 @@
 }
 
 .ai-chat-page.preview-mode .reply-user-name {
-  font-size: 1.5rem;
+  font-size: 1.9rem;
   font-weight: bold;
 }
 
 .ai-chat-page.preview-mode .reply-text {
-  font-size: 1.4rem;
+  font-size: 1.8rem;
 }
 
 .ai-chat-page.preview-mode .announcement-image-inline {
@@ -194,15 +194,15 @@
 }
 
 .ai-chat-page.preview-mode .announcement-title-inline {
-  font-size: 2rem;
+  font-size: 2.4rem;
   font-weight: bold;
   margin-bottom: 15px;
   color: #FFD700;
 }
 
 .ai-chat-page.preview-mode .announcement-link-inline {
-  font-size: 1.6rem;
-  padding: 15px 30px;
+  font-size: 2rem;
+  padding: 18px 35px;
 }
 
 .ai-chat-page.preview-mode .connected-users-pill {
@@ -225,6 +225,14 @@
 /* Responsive adjustments for preview mode on smaller screens */
 @media (max-width: 1920px) {
   .ai-chat-page.preview-mode .message-content {
+    font-size: 2rem;
+  }
+  
+  .ai-chat-page.preview-mode .message-user {
+    font-size: 2rem;
+  }
+  
+  .ai-chat-page.preview-mode .message-time {
     font-size: 1.6rem;
   }
   
@@ -241,6 +249,14 @@
 
 @media (max-width: 1600px) {
   .ai-chat-page.preview-mode .message-content {
+    font-size: 1.9rem;
+  }
+  
+  .ai-chat-page.preview-mode .message-user {
+    font-size: 1.9rem;
+  }
+  
+  .ai-chat-page.preview-mode .message-time {
     font-size: 1.5rem;
   }
   
