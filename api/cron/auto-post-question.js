@@ -5,10 +5,14 @@ export default async function handler(req, res) {
   console.log(`[${timestamp}] Method: ${req.method}`)
   console.log(`[${timestamp}] Headers:`, JSON.stringify(req.headers, null, 2))
   
-  // Vercel Cron Jobs שולחים header 'x-vercel-cron' עם הערך '1'
+  // Vercel Cron Jobs שולחים user-agent: "vercel-cron/1.0"
   // או 'authorization' עם 'Bearer <CRON_SECRET>' אם מוגדר
-  const isVercelCron = req.headers['x-vercel-cron'] === '1'
+  const userAgent = req.headers['user-agent'] || ''
+  const isVercelCron = userAgent === 'vercel-cron/1.0'
   const authHeader = req.headers.authorization
+  
+  console.log(`[${timestamp}] User-Agent:`, userAgent)
+  console.log(`[${timestamp}] Is Vercel Cron:`, isVercelCron)
   
   // אם יש CRON_SECRET, נבדוק אותו
   if (process.env.CRON_SECRET) {
@@ -20,7 +24,7 @@ export default async function handler(req, res) {
     // אם אין CRON_SECRET, נאפשר רק מ-Vercel Cron
     if (!isVercelCron) {
       console.log(`[${timestamp}] ❌ Unauthorized - Not a Vercel Cron request`)
-      console.log(`[${timestamp}] x-vercel-cron header:`, req.headers['x-vercel-cron'])
+      console.log(`[${timestamp}] User-Agent:`, userAgent)
       return res.status(401).json({ error: 'Unauthorized - Only Vercel Cron can call this' })
     }
   }
