@@ -12,11 +12,9 @@ function SuccessScreen({ revealedImage, onClose, formSubmissionId }) {
 
       if (!supabaseUrl || !supabaseAnonKey) return
 
-      // קבלת IP ו-user agent
-      const clientIP = 'unknown' // ב-client-side לא נוכל לקבל IP אמיתי, אבל נשמור את הנתונים
       const userAgent = navigator.userAgent || 'unknown'
 
-      // שליחה ל-Edge Function או ישירות ל-database דרך Supabase client
+      // שליחה ישירות ל-database דרך REST API (עם RLS policy שמאפשר INSERT)
       await fetch(`${supabaseUrl}/rest/v1/whatsapp_clicks`, {
         method: 'POST',
         headers: {
@@ -27,12 +25,12 @@ function SuccessScreen({ revealedImage, onClose, formSubmissionId }) {
         },
         body: JSON.stringify({
           form_submission_id: formSubmissionId || null,
-          ip_address: clientIP,
+          ip_address: 'unknown', // ב-client-side לא נוכל לקבל IP אמיתי
           user_agent: userAgent
         })
       })
     } catch (error) {
-      // לא נכשל את התהליך בגלל שגיאת tracking
+      // לא נכשל את התהליך בגלל שגיאת tracking - זה רק לניתוח
     }
   }
 
