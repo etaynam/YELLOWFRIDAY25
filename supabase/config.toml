@@ -1,0 +1,26 @@
+# Supabase Configuration
+# This file is used by Supabase CLI
+
+[project]
+# Your project reference ID (found in your Supabase dashboard)
+# reference_id = "your-project-ref"
+
+[auth]
+# Enable email confirmations
+enable_signup = true
+
+[api]
+# Enable REST API
+enabled = true
+
+[db]
+# Database configuration
+major_version = 17
+
+[studio]
+# Enable Supabase Studio
+enabled = true
+
+# Edge Functions are configured per function
+# The submit-form function does not require JWT verification
+

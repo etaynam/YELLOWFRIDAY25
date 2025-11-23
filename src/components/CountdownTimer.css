@@ -1,0 +1,133 @@
+.countdown-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.countdown-text {
+  font-family: 'Almoni Bold', sans-serif;
+  font-size: 2rem;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.countdown-timer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 8px;
+  flex-wrap: wrap;
+  direction: ltr; /* LTR כדי שהסדר יהיה נכון: ימים, שעות, דקות, שניות */
+}
+
+.timer-separator {
+  font-family: 'Cal Sans', sans-serif;
+  font-size: 4rem;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  align-self: flex-start;
+  margin-top: 0;
+  padding-top: 0;
+  display: flex;
+  align-items: center;
+  height: 4rem;
+}
+
+.timer-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 100px;
+}
+
+.timer-value {
+  font-family: 'Cal Sans', sans-serif;
+  font-size: 4rem;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  margin-bottom: 10px;
+}
+
+.timer-label {
+  font-family: 'Almoni Neue', sans-serif;
+  font-size: 1.2rem;
+  font-weight: normal;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* דקות בצד שמאל, שניות בצד ימין */
+
+/* רספונסיבי למובייל */
+@media (max-width: 768px) {
+  .countdown-text {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+
+  .countdown-timer {
+    gap: 4px;
+  }
+
+  .timer-item {
+    min-width: 65px;
+    width: auto;
+  }
+
+  .timer-value {
+    font-size: 3.5rem;
+    margin-bottom: 8px;
+  }
+
+  .timer-separator {
+    font-size: 3.5rem;
+    margin-top: 0;
+    padding-top: 0;
+    height: 3.5rem;
+    width: auto;
+  }
+
+  .timer-label {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .countdown-text {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+  }
+
+  .countdown-timer {
+    gap: 3px;
+  }
+
+  .timer-item {
+    min-width: 55px;
+    width: auto;
+  }
+
+  .timer-value {
+    font-size: 3rem;
+    margin-bottom: 6px;
+  }
+
+  .timer-separator {
+    font-size: 3rem;
+    margin-top: 0;
+    padding-top: 0;
+    height: 3rem;
+    width: auto;
+  }
+
+  .timer-label {
+    font-size: 0.85rem;
+  }
+}
+

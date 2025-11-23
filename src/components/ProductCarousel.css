@@ -1,0 +1,183 @@
+.product-carousel-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+  position: relative;
+}
+
+.product-carousel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-item {
+  flex: 0 0 calc((100% - 40px) / 3);
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* אפקט נוסף - overlay כהה */
+.product-item::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 48, 22, 0.3) 0%,
+    rgba(0, 48, 22, 0.5) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.product-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  z-index: 2;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.product-item:hover .product-overlay {
+  opacity: 0.3;
+}
+
+.reveal-icon {
+  font-size: 28px;
+  color: #fff;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.7));
+}
+
+.coming-soon-text {
+  font-family: 'Almoni Bold', sans-serif;
+  font-size: 0.9rem;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+  font-weight: bold;
+  text-align: center;
+  direction: rtl;
+}
+
+.reveal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 48, 22, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.product-item:hover .reveal-overlay {
+  opacity: 1;
+}
+
+.reveal-text {
+  font-family: 'Almoni Bold', sans-serif;
+  font-size: 1rem;
+  color: #FFD700;
+  text-align: center;
+  padding: 20px;
+  direction: rtl;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Responsive for mobile */
+@media (max-width: 768px) {
+  .product-carousel-container {
+    margin: 30px auto;
+    padding: 0 15px;
+  }
+
+  .product-carousel {
+    gap: 15px;
+  }
+
+  .product-item {
+    flex: 0 0 calc((100% - 30px) / 3);
+    border-radius: 15px;
+  }
+
+  .reveal-icon {
+    font-size: 24px;
+  }
+
+  .coming-soon-text {
+    font-size: 0.85rem;
+  }
+
+  .reveal-text {
+    font-size: 0.9rem;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-carousel-container {
+    margin: 20px auto;
+    padding: 0 10px;
+  }
+
+  .product-carousel {
+    gap: 10px;
+  }
+
+  .product-item {
+    flex: 0 0 calc((100% - 20px) / 3);
+    border-radius: 12px;
+  }
+
+  .reveal-icon {
+    font-size: 20px;
+  }
+
+  .coming-soon-text {
+    font-size: 0.75rem;
+  }
+
+  .product-overlay {
+    gap: 6px;
+  }
+
+  .reveal-text {
+    font-size: 0.8rem;
+    padding: 12px;
+  }
+}
+

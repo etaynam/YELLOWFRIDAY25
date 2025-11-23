@@ -1,0 +1,61 @@
+.App {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 60px;
+}
+
+.logo {
+  max-width: 400px;
+  width: 85%;
+  height: auto;
+  padding: 20px;
+}
+
+/* רספונסיבי לסמארטפון */
+@media (max-width: 768px) {
+  .logo {
+    max-width: 300px;
+    width: 75%;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    max-width: 250px;
+    width: 70%;
+    padding: 10px;
+  }
+}
+
+.store-logo {
+  max-width: 250px;
+  width: 60%;
+  height: auto;
+  margin-top: 40px;
+  padding: 20px;
+}
+
+/* רספונסיבי לסמארטפון */
+@media (max-width: 768px) {
+  .store-logo {
+    max-width: 200px;
+    width: 55%;
+    margin-top: 30px;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .store-logo {
+    max-width: 180px;
+    width: 50%;
+    margin-top: 20px;
+    padding: 10px;
+  }
+}
+

@@ -1,0 +1,104 @@
+// Supabase Edge Function - שליחת טופס ל-webhook
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
+
+const WEBHOOK_URL = Deno.env.get('MAKE_WEBHOOK_URL') || 'https://hook.eu2.make.com/0b02h3nkhi77eoxmx52eehfxi7i1keiw'
+
+serve(async (req) => {
+  const timestamp = new Date().toISOString()
+  console.log(`[${timestamp}] ===== New Request Received =====`)
+  console.log(`[${timestamp}] Method: ${req.method}`)
+  console.log(`[${timestamp}] URL: ${req.url}`)
+  
+  // CORS headers
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  }
+
+  // Handle CORS preflight
+  if (req.method === 'OPTIONS') {
+    console.log(`[${timestamp}] CORS preflight request - returning OK`)
+    return new Response('ok', { headers: corsHeaders })
+  }
+
+  try {
+    // קבל את הנתונים מהבקשה
+    console.log(`[${timestamp}] Parsing request body...`)
+    const payload = await req.json()
+    console.log(`[${timestamp}] Payload received:`, JSON.stringify(payload, null, 2))
+
+    // בדיקת honeypot - אם השדה מולא, זה בוט
+    if (payload.honeypot || payload.website) {
+      console.log(`[${timestamp}] ⚠️ BOT DETECTED via honeypot!`)
+      console.log(`[${timestamp}] Honeypot value:`, payload.honeypot || payload.website)
+      return new Response(
+        JSON.stringify({ error: 'Invalid request' }),
+        { 
+          status: 400, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      )
+    }
+
+    // בדיקת rate limiting בסיסית - בדוק IP
+    const clientIP = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown'
+    console.log(`[${timestamp}] Client IP: ${clientIP}`)
+    
+    // שליחה ל-webhook
+    console.log(`[${timestamp}] 📤 Sending to webhook: ${WEBHOOK_URL}`)
+    const webhookPayload = {
+      ...payload,
+      clientIP: clientIP,
+      submittedAt: new Date().toISOString()
+    }
+    console.log(`[${timestamp}] Webhook payload:`, JSON.stringify(webhookPayload, null, 2))
+    
+    const webhookResponse = await fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(webhookPayload)
+    })
+
+    console.log(`[${timestamp}] Webhook response status: ${webhookResponse.status}`)
+    console.log(`[${timestamp}] Webhook response headers:`, Object.fromEntries(webhookResponse.headers.entries()))
+
+    if (!webhookResponse.ok) {
+      const errorText = await webhookResponse.text()
+      console.error(`[${timestamp}] ❌ Webhook error: ${webhookResponse.status} - ${errorText}`)
+      throw new Error(`Webhook returned ${webhookResponse.status}: ${errorText}`)
+    }
+
+    const webhookData = await webhookResponse.text()
+    console.log(`[${timestamp}] ✅ Webhook response:`, webhookData)
+    console.log(`[${timestamp}] ===== Request Completed Successfully =====`)
+
+    return new Response(
+      JSON.stringify({ 
+        success: true, 
+        message: 'Form submitted successfully',
+        webhookResponse: webhookData 
+      }),
+      { 
+        status: 200, 
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+      }
+    )
+
+  } catch (error) {
+    console.error(`[${timestamp}] ❌ ERROR in submit-form function:`, error)
+    console.error(`[${timestamp}] Error stack:`, error.stack)
+    console.error(`[${timestamp}] ===== Request Failed =====`)
+    return new Response(
+      JSON.stringify({ 
+        error: error.message || 'Internal server error' 
+      }),
+      { 
+        status: 500, 
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+      }
+    )
+  }
+})
+
