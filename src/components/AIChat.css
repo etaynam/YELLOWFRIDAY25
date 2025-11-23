@@ -142,13 +142,19 @@
 }
 
 .ai-chat-page.preview-mode .user-message .message-content {
-  background: rgba(255, 255, 255, 0.15);
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #212529;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-top-right-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .ai-chat-page.preview-mode .ai-message .message-content {
-  background: rgba(82, 255, 135, 0.15);
-  border: 2px solid rgba(82, 255, 135, 0.3);
+  background: linear-gradient(135deg, #FFD700 0%, #FFE44D 100%);
+  color: #003016;
+  border: 1px solid #FFD700;
+  border-top-left-radius: 4px;
+  box-shadow: 0 4px 16px rgba(255, 215, 0, 0.4);
 }
 
 .ai-chat-page.preview-mode .announcement-message .message-content {
