@@ -638,3 +638,109 @@
   }
 }
 
+/* Analytics Dashboard */
+.analytics-dashboard {
+  padding: 20px;
+}
+
+.analytics-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #1a5e39 0%, #023f1f 100%);
+  border: 2px solid #52ff87;
+  border-radius: 15px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(82, 255, 135, 0.3);
+}
+
+.stat-card h3 {
+  color: #52ff87;
+  font-size: 1rem;
+  margin: 0 0 15px 0;
+  font-family: 'Almoni Bold', sans-serif;
+}
+
+.stat-number {
+  color: #FFD700;
+  font-size: 2.5rem;
+  font-weight: bold;
+  font-family: 'Almoni Bold', sans-serif;
+}
+
+.daily-stats {
+  margin-top: 30px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 20px;
+  border: 1px solid rgba(82, 255, 135, 0.3);
+}
+
+.daily-stats h3 {
+  color: #52ff87;
+  margin-bottom: 20px;
+  font-family: 'Almoni Bold', sans-serif;
+}
+
+.daily-chart {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  gap: 10px;
+  min-height: 200px;
+  padding: 20px 0;
+}
+
+.daily-bar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.bar-label {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  font-family: 'Almoni Neue', sans-serif;
+}
+
+.bar-container {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.bar {
+  width: 80%;
+  background: linear-gradient(180deg, #52ff87 0%, #00d977 100%);
+  border-radius: 8px 8px 0 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 10px;
+  color: #003016;
+  font-weight: bold;
+  font-family: 'Almoni Bold', sans-serif;
+  font-size: 0.9rem;
+  min-height: 30px;
+  transition: all 0.3s ease;
+}
+
+.bar:hover {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+.clicks-bar {
+  background: linear-gradient(180deg, #FFD700 0%, #FFE44D 100%);
+  color: #003016;
+}
+
