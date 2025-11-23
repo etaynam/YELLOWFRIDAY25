@@ -306,7 +306,9 @@ const SecretDealsStrip = forwardRef((props, ref) => {
       })
       
       if (!response.ok) {
-        throw new Error('שגיאה בשליחת הטופס')
+        const errorText = await response.text()
+        console.error('Error response:', response.status, errorText)
+        throw new Error(`שגיאה בשליחת הטופס (${response.status}): ${errorText}`)
       }
       
       // הצלחה - סגור את הטופס והצג מסך הצלחה
