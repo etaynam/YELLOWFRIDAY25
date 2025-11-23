@@ -436,21 +436,23 @@ function AIChat({ isPreview = false }) {
 
       // גלול למטה אם זו הודעה חדשה (AI או משתמש)
       // ב-preview mode תמיד לגלול, אחרת רק אם המשתמש כבר גלל למטה
-      setTimeout(() => {
-        const container = messagesContainerRef.current
-        if (container) {
-          if (isPreview) {
-            // ב-preview mode תמיד לגלול אוטומטית להודעה החדשה
-            scrollToBottom()
-          } else {
+      if (isPreview) {
+        // ב-preview mode תמיד לגלול אוטומטית להודעה החדשה - מיידית
+        setTimeout(() => {
+          scrollToBottom(true)
+        }, 50)
+      } else {
+        setTimeout(() => {
+          const container = messagesContainerRef.current
+          if (container) {
             // ב-mode רגיל רק אם המשתמש כבר גלל למטה
             const isNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 200
             if (isNearBottom) {
               scrollToBottom()
             }
           }
-        }
-      }, 100)
+        }, 100)
+      }
 
       return sorted
     })
@@ -550,15 +552,21 @@ function AIChat({ isPreview = false }) {
     // גלול למטה רק אם זה לא טעינה ראשונית או אם יש הודעה חדשה שנשלחה
     // אבל רק אם יש הודעות (לא בטעינה ראשונית)
     if (!isInitialLoad && messages.length > 0) {
-      // בדיקה אם ההודעה האחרונה היא חדשה (נשלחה עכשיו)
-      const lastMessage = messages[messages.length - 1]
-      const now = new Date()
-      const messageTime = lastMessage.timestampDate || new Date(0)
-      const timeDiff = now.getTime() - messageTime.getTime()
-      
-      // ב-preview mode תמיד לגלול להודעה חדשה, אחרת רק אם נשלחה ב-5 שניות האחרונות
-      if (isPreview || timeDiff < 5000) {
-        scrollToBottom()
+      if (isPreview) {
+        // ב-preview mode תמיד לגלול למטה - מיידית
+        setTimeout(() => {
+          scrollToBottom(true)
+        }, 50)
+      } else {
+        // ב-mode רגיל רק אם ההודעה נשלחה ב-5 שניות האחרונות
+        const lastMessage = messages[messages.length - 1]
+        const now = new Date()
+        const messageTime = lastMessage.timestampDate || new Date(0)
+        const timeDiff = now.getTime() - messageTime.getTime()
+        
+        if (timeDiff < 5000) {
+          scrollToBottom()
+        }
       }
     }
   }, [messages, isInitialLoad, isPreview])
