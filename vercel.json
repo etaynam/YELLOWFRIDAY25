@@ -1,4 +1,6 @@
 {
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
   "crons": [
     {
       "path": "/api/cron/auto-post-question",
@@ -10,10 +12,14 @@
       "maxDuration": 60
     }
   },
-  "rewrites": [
+  "routes": [
     {
-      "source": "/:path*",
-      "destination": "/index.html"
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
