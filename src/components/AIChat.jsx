@@ -435,13 +435,19 @@ function AIChat({ isPreview = false }) {
       }
 
       // גלול למטה אם זו הודעה חדשה (AI או משתמש)
-      // אבל רק אם המשתמש כבר גלל למטה (לא באמצע קריאה)
+      // ב-preview mode תמיד לגלול, אחרת רק אם המשתמש כבר גלל למטה
       setTimeout(() => {
         const container = messagesContainerRef.current
         if (container) {
-          const isNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 200
-          if (isNearBottom) {
+          if (isPreview) {
+            // ב-preview mode תמיד לגלול אוטומטית להודעה החדשה
             scrollToBottom()
+          } else {
+            // ב-mode רגיל רק אם המשתמש כבר גלל למטה
+            const isNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 200
+            if (isNearBottom) {
+              scrollToBottom()
+            }
           }
         }
       }, 100)
@@ -550,12 +556,12 @@ function AIChat({ isPreview = false }) {
       const messageTime = lastMessage.timestampDate || new Date(0)
       const timeDiff = now.getTime() - messageTime.getTime()
       
-      // אם ההודעה נשלחה ב-5 שניות האחרונות, גלול למטה
-      if (timeDiff < 5000) {
+      // ב-preview mode תמיד לגלול להודעה חדשה, אחרת רק אם נשלחה ב-5 שניות האחרונות
+      if (isPreview || timeDiff < 5000) {
         scrollToBottom()
       }
     }
-  }, [messages, isInitialLoad])
+  }, [messages, isInitialLoad, isPreview])
 
   // טעינת הודעות מודגשות
   useEffect(() => {
@@ -1152,7 +1158,7 @@ function AIChat({ isPreview = false }) {
   }
 
   return (
-    <div className="ai-chat-page">
+    <div className={`ai-chat-page ${isPreview ? 'preview-mode' : ''}`}>
       {showWelcomeForm && (
         <div className="welcome-form-overlay">
           <div className="welcome-form-container">
