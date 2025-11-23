@@ -2,23 +2,25 @@
 export default async function handler(req, res) {
   const timestamp = new Date().toISOString()
   console.log(`[${timestamp}] 🔔 Cron job triggered`)
+  console.log(`[${timestamp}] Method: ${req.method}`)
   console.log(`[${timestamp}] Headers:`, JSON.stringify(req.headers, null, 2))
   
-  // וידוא שזה קריאה מ-Vercel Cron (אבטחה)
-  // Vercel שולח header מיוחד בשם 'authorization' עם הערך 'Bearer <CRON_SECRET>'
-  const authHeader = req.headers.authorization || req.headers['x-vercel-cron']
+  // Vercel Cron Jobs שולחים header 'x-vercel-cron' עם הערך '1'
+  // או 'authorization' עם 'Bearer <CRON_SECRET>' אם מוגדר
+  const isVercelCron = req.headers['x-vercel-cron'] === '1'
+  const authHeader = req.headers.authorization
   
-  // אם יש CRON_SECRET, נבדוק אותו. אם לא, נאפשר רק מ-Vercel Cron
+  // אם יש CRON_SECRET, נבדוק אותו
   if (process.env.CRON_SECRET) {
-    if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-      console.log(`[${timestamp}] ❌ Unauthorized - CRON_SECRET mismatch`)
+    if (authHeader !== `Bearer ${process.env.CRON_SECRET}` && !isVercelCron) {
+      console.log(`[${timestamp}] ❌ Unauthorized - CRON_SECRET mismatch and not Vercel Cron`)
       return res.status(401).json({ error: 'Unauthorized' })
     }
   } else {
-    // אם אין CRON_SECRET, נאפשר רק קריאות מ-Vercel Cron (עם header מיוחד)
-    // Vercel Cron שולח header 'x-vercel-cron' או 'authorization' עם הערך מהסביבה
-    if (!req.headers['x-vercel-cron'] && !authHeader) {
-      console.log(`[${timestamp}] ❌ Unauthorized - No Vercel Cron header`)
+    // אם אין CRON_SECRET, נאפשר רק מ-Vercel Cron
+    if (!isVercelCron) {
+      console.log(`[${timestamp}] ❌ Unauthorized - Not a Vercel Cron request`)
+      console.log(`[${timestamp}] x-vercel-cron header:`, req.headers['x-vercel-cron'])
       return res.status(401).json({ error: 'Unauthorized - Only Vercel Cron can call this' })
     }
   }
