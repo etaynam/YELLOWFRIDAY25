@@ -1,0 +1,640 @@
+.admin-login-page {
+  width: 100%;
+  min-height: 100vh;
+  background: radial-gradient(circle, #1a5e39 0%, #023f1f 50%, #003016 100%);
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  direction: rtl;
+}
+
+.admin-login-container {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.admin-login-title {
+  font-family: 'Almoni Bold', sans-serif;
+  font-size: 2rem;
+  color: #003016;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.admin-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.admin-login-input {
+  padding: 15px;
+  border: 2px solid #dee2e6;
+  border-radius: 10px;
+  font-family: 'Almoni Neue', sans-serif;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.admin-login-input:focus {
+  outline: none;
+  border-color: #003016;
+  box-shadow: 0 0 0 3px rgba(0, 48, 22, 0.1);
+}
+
+.admin-login-button {
+  padding: 15px;
+  background: linear-gradient(135deg, #003016 0%, #023f1f 100%);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Almoni Bold', sans-serif;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.admin-login-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 48, 22, 0.3);
+}
+
+.admin-login-error {
+  color: #dc3545;
+  font-family: 'Almoni Neue', sans-serif;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 10px;
+  background: #f8d7da;
+  border-radius: 8px;
+}
+
+.admin-login-note {
+  margin-top: 20px;
+  text-align: center;
+  font-family: 'Almoni Neue', sans-serif;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.admin-panel {
+  width: 100%;
+  min-height: 100vh;
+  background: #f8f9fa;
+  direction: rtl;
+}
+
+.admin-header {
+  background: linear-gradient(135deg, #003016 0%, #023f1f 100%);
+  color: #fff;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.admin-header h1 {
+  font-family: 'Almoni Bold', sans-serif;
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.admin-logout-button {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-family: 'Almoni Neue', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.admin-logout-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.admin-tabs {
+  display: flex;
+  background: #fff;
+  border-bottom: 2px solid #dee2e6;
+  padding: 0 30px;
+  gap: 10px;
+}
+
+.admin-tabs button {
+  padding: 15px 25px;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-family: 'Almoni Neue', sans-serif;
+  font-size: 1rem;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.admin-tabs button:hover {
+  color: #003016;
+}
+
+.admin-tabs button.active {
+  color: #003016;
+  border-bottom-color: #FFD700;
+  font-weight: bold;
+}
+
+.admin-content {
+  padding: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.admin-section {
+  background: #fff;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.admin-section h2 {
+  font-family: 'Almoni Bold', sans-serif;
+  font-size: 1.8rem;
+  color: #003016;
+  margin-bottom: 25px;
+}
+
+.messages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.message-item {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 15px;
+  border-right: 4px solid #dee2e6;
+}
+
+.message-item.ai {
+  border-right-color: #FFD700;
+  background: #fffbf0;
+}
+
+.message-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.message-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: auto;
+}
+
+.message-user-name {
+  font-family: 'Almoni Bold', sans-serif;
+  color: #003016;
+  font-weight: bold;
+}
+
+.message-time {
+  font-family: 'Almoni Neue', sans-serif;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.message-ip {
+  font-family: 'Almoni Neue', sans-serif;
+  font-size: 0.8rem;
+  color: #999;
+  font-family: monospace;
+}
+
+.delete-button {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.delete-button:hover {
+  background: #c82333;
+  transform: translateY(-1px);
+}
+
+.block-ip-button-admin {
+  background: #ffc107;
+  color: #000;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  font-family: 'Almoni Neue', sans-serif;
+  font-weight: 600;
+}
+
+.block-ip-button-admin:hover {
+  background: #ffca2c;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(255, 193, 7, 0.3);
+}
+
+.message-text {
+  font-family: 'Almoni Neue', sans-serif;
+  color: #333;
+  line-height: 1.6;
+}
+
+.add-item-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.admin-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 12px 15px;
+  border: 2px solid #dee2e6;
+  border-radius: 10px;
+  font-family: 'Almoni Neue', sans-serif;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.admin-input:focus {
+  outline: none;
+  border-color: #003016;
+  box-shadow: 0 0 0 3px rgba(0, 48, 22, 0.1);
+}
+
+.admin-textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #dee2e6;
+  border-radius: 10px;
+  font-family: 'Almoni Neue', sans-serif;
+  font-size: 1rem;
+  resize: vertical;
+  transition: all 0.3s ease;
+}
+
+.admin-textarea:focus {
+  outline: none;
+  border-color: #003016;
+  box-shadow: 0 0 0 3px rgba(0, 48, 22, 0.1);
+}
+
+.add-button {
+  background: linear-gradient(135deg, #003016 0%, #023f1f 100%);
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-family: 'Almoni Neue', sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.add-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 48, 22, 0.3);
+}
+
+.save-button {
+  background: linear-gradient(135deg, #FFD700 0%, #FFE44D 100%);
+  color: #003016;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 10px;
+  font-family: 'Almoni Bold', sans-serif;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  margin-top: 15px;
+}
+
+.save-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+}
+
+.items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.item-card {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #dee2e6;
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.item-info strong {
+  font-family: 'Almoni Bold', sans-serif;
+  color: #003016;
+  font-size: 1.1rem;
+}
+
+.item-reason {
+  font-family: 'Almoni Neue', sans-serif;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.item-date {
+  font-family: 'Almoni Neue', sans-serif;
+  color: #999;
+  font-size: 0.85rem;
+}
+
+.item-text {
+  font-family: 'Almoni Neue', sans-serif;
+  color: #333;
+  font-size: 1rem;
+}
+
+.remove-button {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 8px;
+  font-family: 'Almoni Neue', sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.3s ease;
+}
+
+.remove-button:hover {
+  background: #c82333;
+  transform: translateY(-1px);
+}
+
+.announcement-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+}
+
+.image-upload-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.image-upload-label {
+  cursor: pointer;
+}
+
+.image-upload-input {
+  display: none;
+}
+
+.image-upload-button {
+  display: inline-block;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #003016 0%, #023f1f 100%);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Almoni Neue', sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.image-upload-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 48, 22, 0.3);
+}
+
+.image-upload-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.image-preview-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.image-preview {
+  max-width: 100%;
+  max-height: 300px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  object-fit: contain;
+}
+
+.upload-image-button {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #52ff87 0%, #4ae875 100%);
+  color: #003016;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Almoni Bold', sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.upload-image-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(82, 255, 135, 0.3);
+}
+
+.upload-image-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.image-uploaded-badge {
+  padding: 6px 12px;
+  background: #52ff87;
+  color: #003016;
+  border-radius: 6px;
+  font-family: 'Almoni Bold', sans-serif;
+  font-size: 0.85rem;
+}
+
+.remove-image-button {
+  padding: 8px 16px;
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Almoni Neue', sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.remove-image-button:hover {
+  background: #c82333;
+  transform: translateY(-1px);
+}
+
+.image-preview-note {
+  font-family: 'Almoni Neue', sans-serif;
+  font-size: 0.85rem;
+  color: #666;
+  font-style: italic;
+  margin-top: 5px;
+}
+
+.announcements-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.announcement-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid #FFD700;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.announcement-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.announcement-card h3 {
+  font-family: 'Almoni Bold', sans-serif;
+  color: #003016;
+  margin: 0;
+}
+
+.announcement-card p {
+  font-family: 'Almoni Neue', sans-serif;
+  color: #333;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.announcement-link {
+  color: #003016;
+  text-decoration: none;
+  font-family: 'Almoni Bold', sans-serif;
+  padding: 10px 15px;
+  background: #FFD700;
+  border-radius: 8px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.announcement-link:hover {
+  background: #FFE44D;
+  transform: translateY(-2px);
+}
+
+.announcement-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admin-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+
+  .admin-tabs {
+    flex-wrap: wrap;
+    padding: 0 15px;
+  }
+
+  .admin-tabs button {
+    padding: 12px 15px;
+    font-size: 0.9rem;
+  }
+
+  .admin-content {
+    padding: 15px;
+  }
+
+  .admin-section {
+    padding: 20px;
+  }
+
+  .add-item-form {
+    flex-direction: column;
+  }
+
+  .announcements-list {
+    grid-template-columns: 1fr;
+  }
+}
+
