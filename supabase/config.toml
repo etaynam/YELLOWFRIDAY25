@@ -24,3 +24,15 @@ enabled = true
 # Edge Functions are configured per function
 # The submit-form function does not require JWT verification
 
+[functions.submit-form]
+verify_jwt = false
+
+[functions.ai-chat]
+verify_jwt = false
+
+[functions.admin-api]
+verify_jwt = true
+
+[functions.auto-post-question]
+verify_jwt = false
+
