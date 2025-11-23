@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import './SuccessScreen.css'
 
 function SuccessScreen({ revealedImage, onClose, formSubmissionId }) {
