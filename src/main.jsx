@@ -2,8 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import App from './App.jsx'
-import AIChat from './components/AIChat.jsx'
 import AdminPanel from './components/AdminPanel.jsx'
+import FAQDisplay from './components/FAQDisplay.jsx'
 import './index.css'
 
 // Debug component to log current route
@@ -24,16 +24,15 @@ function RouterApp() {
       <DebugRouter />
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="/chat" element={<AIChat />} />
-        <Route path="/preview" element={<AIChat isPreview={true} />} />
         <Route path="/admin" element={<AdminPanel />} />
+        <Route path="/faq-display" element={<FAQDisplay />} />
       </Routes>
     </BrowserRouter>
   )
 }
 
 console.log('🚀 App starting...')
-console.log('🚀 Routes configured: /, /chat, /admin')
+console.log('🚀 Routes configured: /, /admin, /faq-display')
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
