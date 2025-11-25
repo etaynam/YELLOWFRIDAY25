@@ -37,6 +37,11 @@ function FAQDisplay() {
         <div className="faq-question">
           {currentFAQ.question}
         </div>
+        {currentFAQ.name && currentFAQ.city && (
+          <div className="faq-author">
+            {currentFAQ.name}, {currentFAQ.city}
+          </div>
+        )}
         <div className="faq-answer">
           {currentFAQ.answer}
         </div>
