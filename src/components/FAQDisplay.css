@@ -63,23 +63,9 @@
   color: #FFD700;
   text-align: center;
   line-height: 1.1;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   max-width: 100%;
   word-wrap: break-word;
-  position: relative;
-  z-index: 3;
-  display: block;
-  visibility: visible;
-}
-
-.faq-author {
-  font-family: 'Almoni Neue', 'Arial Hebrew', 'Arial', sans-serif;
-  font-size: 1.5rem;
-  color: #b8d4c1;
-  text-align: center;
-  line-height: 1.2;
-  margin-bottom: 30px;
-  opacity: 0.8;
   position: relative;
   z-index: 3;
   display: block;
