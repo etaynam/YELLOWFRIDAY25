@@ -24,8 +24,8 @@ function RouterApp() {
     <BrowserRouter>
       <DebugRouter />
       <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/variant" element={<AppVariant />} />
+        <Route path="/" element={<AppVariant />} />
+        <Route path="/original" element={<App />} />
         <Route path="/admin" element={<AdminPanel />} />
         <Route path="/faq-display" element={<FAQDisplay />} />
       </Routes>
@@ -34,7 +34,7 @@ function RouterApp() {
 }
 
 console.log('🚀 App starting...')
-console.log('🚀 Routes configured: /, /variant, /admin, /faq-display')
+console.log('🚀 Routes configured: / (new variant), /original, /admin, /faq-display')
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
