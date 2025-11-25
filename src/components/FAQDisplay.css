@@ -59,11 +59,10 @@
 
 .faq-question {
   font-family: 'Almoni Bold', 'Arial Hebrew', 'Arial', sans-serif;
-  font-size: 5.5rem;
+  font-size: 3rem;
   color: #FFD700;
   text-align: center;
   line-height: 1.1;
-  text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.6);
   margin-bottom: 20px;
   max-width: 100%;
   word-wrap: break-word;
@@ -92,7 +91,7 @@
 /* Responsive adjustments for different screen sizes */
 @media (max-width: 1920px) {
   .faq-question {
-    font-size: 5rem;
+    font-size: 3rem;
   }
   
   .faq-answer {
@@ -102,7 +101,7 @@
 
 @media (max-width: 1600px) {
   .faq-question {
-    font-size: 5rem;
+    font-size: 3rem;
   }
   
   .faq-answer {
@@ -116,7 +115,7 @@
 
 @media (max-width: 1366px) {
   .faq-question {
-    font-size: 5rem;
+    font-size: 3rem;
   }
   
   .faq-answer {
@@ -135,7 +134,7 @@
 
 @media (max-width: 1024px) {
   .faq-question {
-    font-size: 5rem;
+    font-size: 3rem;
   }
   
   .faq-answer {
