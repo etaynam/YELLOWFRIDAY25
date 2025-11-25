@@ -5,7 +5,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 40px 60px;
+  padding: 180px 60px;
   direction: rtl;
   background: radial-gradient(circle, #1a5e39 0%, #023f1f 50%, #003016 100%);
   background-attachment: fixed;
@@ -92,7 +92,7 @@
 /* Responsive adjustments for different screen sizes */
 @media (max-width: 1920px) {
   .faq-question {
-    font-size: 4rem;
+    font-size: 5rem;
   }
   
   .faq-answer {
@@ -102,7 +102,7 @@
 
 @media (max-width: 1600px) {
   .faq-question {
-    font-size: 3.5rem;
+    font-size: 5rem;
   }
   
   .faq-answer {
@@ -116,7 +116,7 @@
 
 @media (max-width: 1366px) {
   .faq-question {
-    font-size: 3rem;
+    font-size: 5rem;
   }
   
   .faq-answer {
@@ -135,7 +135,7 @@
 
 @media (max-width: 1024px) {
   .faq-question {
-    font-size: 2.5rem;
+    font-size: 5rem;
   }
   
   .faq-answer {
